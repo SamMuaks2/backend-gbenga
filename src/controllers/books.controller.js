@@ -15,49 +15,62 @@ exports.createBook = async (req, res) => {
   }
 };
 
-// const BASE_URL = "http://localhost:4000";
-
-// exports.createBook = async (req, res) => {
-//   const book = await Book.create({
-//     ...req.body,
-//     coverImage: req.file ? `/uploads/${req.file.filename}` : null,
-
-//     // coverImage: req.file
-//     //   ? `${BASE_URL}/uploads/${req.file.filename}`
-//     //   : null,
-//   });
-
-//   res.status(201).json(book);
-// };
-
-
 // READ (ALL)
 exports.getBooks = async (req, res) => {
-  const books = await Book.find().sort({ createdAt: -1 });
-  res.json(books);
+  try {
+    const books = await Book.find().sort({ createdAt: -1 });
+    res.json(books);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 // READ (FEATURED)
 exports.getFeaturedBooks = async (req, res) => {
-  const books = await Book.find({ isFeatured: true }).limit(6);
-  res.json(books);
+  try {
+    const books = await Book.find({ isFeatured: true }).limit(6);
+    res.json(books);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 // UPDATE
 exports.updateBook = async (req, res) => {
-  const updated = await Book.findByIdAndUpdate(
-    req.params.id,
-    {
+  try {
+    const updateData = {
       ...req.body,
-      ...(req.file && { coverImage: `/uploads/${req.file.filename}` }),
-    },
-    { new: true }
-  );
-  res.json(updated);
+      
+      ...(req.file && { coverImage: `${BASE_URL}/uploads/${req.file.filename}` }),
+    };
+
+    const updated = await Book.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 // DELETE
 exports.deleteBook = async (req, res) => {
-  await Book.findByIdAndDelete(req.params.id);
-  res.json({ success: true });
+  try {
+    const deleted = await Book.findByIdAndDelete(req.params.id);
+    
+    if (!deleted) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
