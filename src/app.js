@@ -33,7 +33,7 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        imgSrc: ["'self'", "data:", "blob:", "http://localhost:3000", "http://localhost:4000", "http://localhost:3001"],
+        imgSrc: ["'self'", "data:", "blob:", "http://localhost:3000", "http://localhost:4000", "http://localhost:3001", "https://gbengaomole.com", "https://www.gbengaomole.com"],
       },
     },
   })
@@ -41,7 +41,7 @@ app.use(
 
 // CORS: Allow requests from frontend
 app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:3001"],
+  origin: ["http://localhost:3000", "http://localhost:3001", "https://gbengaomole.com", "https://www.gbengaomole.com"],
   credentials: true
 }));
 
