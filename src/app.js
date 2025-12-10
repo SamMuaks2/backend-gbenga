@@ -3,7 +3,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const morgan = require('morgan');
 const routes = require('./routes');
-const devotionalRoutes = require("./routes/devotionals.routes");
+// const devotionalRoutes = require("./routes/devotionals.routes");
 const path = require("path");
 const fs = require("fs");
 const mime = require("mime-types");
@@ -78,7 +78,7 @@ app.use("/uploads", (req, res, next) => {
 
 // Routes
 app.use("/api/books", require("./routes/books.routes"));
-app.use("/api/devotionals", devotionalRoutes);
+app.use("/api/devotionals", require("./routes/devotionals.routes"));
 
 // Health check
 app.get('/api/health', (req, res) => {
