@@ -58,7 +58,7 @@ app.use(
     setHeaders: (res, filePath) => {
       const mimeType = mime.lookup(filePath);
       if (mimeType) {
-        res.setHeader("Content-Type", mimeType);
+        res.setHeader("Cross-Origin-Resource-Policy", "cross-origin", "Content-Type", mimeType);
       }
       // Add CORS headers for images
       res.setHeader("Access-Control-Allow-Origin", "*");
