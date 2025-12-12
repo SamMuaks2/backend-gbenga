@@ -6,8 +6,8 @@ const DevotionalSchema = new mongoose.Schema(
     slug: { type: String, unique: true },
     type: { type: String, enum: ["daily", "weekly", "monthly"] },
 
-    coverImage: { type: String }, // URL
-    fileUrl: { type: String },    // pdf/docx/txt
+    coverImage: { type: String }, 
+    fileUrl: { type: String },    
 
     views: { type: Number, default: 0 },
     published: { type: Boolean, default: true },

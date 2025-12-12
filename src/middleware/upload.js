@@ -51,13 +51,15 @@ function ensureDir(dir) {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+    // let uploadPath = "/routes/uploads/devotionals";
     let uploadPath = "uploads/devotionals";
 
     if (file.fieldname === "cover") {
+      // uploadPath = "/routes/uploads/covers";
       uploadPath = "uploads/covers";
     }
 
-    // ✅ ENSURE DIRECTORY EXISTS
+    // ENSURE DIRECTORY EXISTS
     ensureDir(uploadPath);
 
     cb(null, uploadPath);
@@ -66,8 +68,8 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
     const name = path
-      .basename(file.originalname, ext)
-      .replace(/\s+/g, "_");
+      .basename(file.originalname, ext);
+      // .replace(/\s+/g, "_");
 
     cb(null, `${name}-${Date.now()}${ext}`);
   },
